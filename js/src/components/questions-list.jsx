@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require( 'react-dom' );
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+import {VelocityTransitionGroup} from 'velocity-react';
 
 var QuestionBox = require( './question-box.jsx' );
 var ResultsLoad = require( './results.jsx' );
@@ -38,6 +38,11 @@ var QuestionsList = React.createClass({
 		var the_quiz_length = the_quiz.length;
 		var the_results = data._mjj_quiz_results_meta;
 
+		var animateResults = ( this.state.changeResults === the_quiz_length + 1 ) ? 'animate' : 'dont-animate';
+
+		// I need this because I can't pass a boolean true through jsx so it has to be in a variable
+		var runOnMount = true;
+
 		// this is the data we will pass through all of our components to correctly update QuestionsList
 		var updata = {
 			changeResults: this.state.changeResults,
@@ -57,15 +62,15 @@ var QuestionsList = React.createClass({
 		if( this.state.numQuestions > the_quiz_length && this.state.changeResults > the_quiz_length ){
 			results.push(
 				// the key is this.state.changeResults which, when changed, causes it to re-render key={this.state.changeResults}
-				<ResultsLoad key={this.state.changeResults} resultsMeta={the_results} id="results" />
+				<ResultsLoad key={this.state.changeResults} resultsMeta={the_results} id="results" animateResults={animateResults} />
 			);
 		}
 
 		return(
 			<div className="questions-list" id="mjj-quiz-questions">
-				<ReactCSSTransitionGroup transitionName="example" transitionEnterTimeout={500} transitionLeave={false}>
+				<VelocityTransitionGroup enter={{animation: "fadeIn", duration: 250}} leave={{animation: "fadeOut"}} runOnMount={runOnMount}>
 					{questions}
-				</ReactCSSTransitionGroup>
+				</VelocityTransitionGroup>
 					{results}
 			</div>
 		);

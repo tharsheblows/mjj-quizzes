@@ -112,10 +112,13 @@ var AnAnswer = React.createClass({
 		var answerInfo = this.props.answerInfo;
 		var answer = answerInfo.answer;
 		var points = answerInfo.points;
+		var theClass = (answerInfo.class !== '' ) ? ' ' + answerInfo.class : '' ;
 		var selected = ( this.props.isSelected === 'yes' ) ? 'selected' : 'not-selected';
 
+		var answerClass = selected + theClass;
+
 		return( 
-			<button className={selected} key={selected} data-points={points} onClick={ this.handleChange }>{answer}</button>
+			<button className={answerClass} key={selected} data-points={points} onClick={ this.handleChange }>{answer}</button>
 		);
 	}
 
