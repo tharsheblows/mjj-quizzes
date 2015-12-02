@@ -299,7 +299,7 @@ var ResultsBox = React.createClass({
 		var runOnMount = true;
 
 		resultsMetas.forEach(function (item, index, array) {
-			if (points >= parseInt(item.results_lower_bound, 10) && points < parseInt(item.results_upper_bound, 10)) {
+			if (points >= parseInt(item.results_lower_bound, 10) && points <= parseInt(item.results_upper_bound, 10)) {
 				resultMetaToUse = item;
 			}
 		});
