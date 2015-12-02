@@ -5,6 +5,10 @@ It makes a custom post type called "Quizzes". For each questions, give some answ
 
 Then take the quiz!
 
+##requirements
+
+This uses the [CMB2 plugin from WebDevStudios](https://github.com/WebDevStudios/CMB2) to make metaboxes, so that must be installed for it to work. I am not sure which version of WP is supported, but it was developed on a 4.4 beta.
+
 ###caveats and disclaimers
 
 This is a work in progress and mainly a shell for something later. It's untested and I'm sure will change once I do that! Use at your own peril.
