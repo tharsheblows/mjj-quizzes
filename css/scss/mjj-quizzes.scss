@@ -20,6 +20,12 @@
 			p{
 				text-align: left;
 			}
+
+			h4{
+				background-color: #FFFF00;
+				display: inline-block;
+				padding: 0.5em;
+			}
 		}
 	}
 
@@ -39,40 +45,5 @@
 			color: #FFF;
 		}
 	}
-
-.example-enter {
-  opacity: 0.01;
-}
-
-.example-enter.example-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.example-leave {
-  opacity: 0;
-}
-
-.example-leave.example-leave-active {
-  opacity: 0;
-}
-
-.results-enter {
-  opacity: 0.01;
-}
-
-.results-enter.results-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.results-leave {
-  opacity: 0;
-  display:none;
-}
-
-.results-leave.results-leave-active {
-  opacity: 0;
-}
 
 }

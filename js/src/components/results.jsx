@@ -1,7 +1,10 @@
 var React = require('react');
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 var marked = require( 'marked' );
+
+import {VelocityTransitionGroup, velocityHelpers} from 'velocity-react';
+require('velocity-animate');
+require('velocity-animate/velocity.ui');
 
 var ResultsLoad = React.createClass({
 
@@ -9,24 +12,51 @@ var ResultsLoad = React.createClass({
 	componentDidMount: function(){
 
 		var allPointsNodesList = document.querySelectorAll( '#mjj-quiz-questions button.selected' );
-		var points = 0;
+		var pointsSum = 0;
+
+		var runOnMount = true;
 
 		for (var i = 0; i < allPointsNodesList.length; ++i) {
 			var item = allPointsNodesList[i];
-			points = parseInt( item.getAttribute('data-points'), 10 ) + parseInt( points, 10 );
-			console.log( points );
+			pointsSum = parseInt( item.getAttribute('data-points'), 10 ) + parseInt( pointsSum, 10 );
 		}
 
-		this.setState({ component: <ResultsBox changeResults={ this.props.changeResults } points={ points } resultsMeta={ this.props.resultsMeta } /> });
+		console.log( pointsSum );
+
+		if( this.props.animateResults === 'animate' ){
+			this.setState(
+				{ points: pointsSum },
+				function (){
+					this.setState({
+						component: 
+							<VelocityTransitionGroup enter={{animation: "fadeIn", duration: 500}} leave={{animation: "fadeOut"}} runOnMount={runOnMount}>
+								<div><ResultsBox key="ResultsBox" points={ this.state.points } resultsMeta={ this.props.resultsMeta } /></div>
+							</VelocityTransitionGroup>,
+					});
+				});
+		}
+		else{
+			this.setState(
+				{ points: pointsSum },
+				function (){
+					this.setState({
+						component: 
+							<ResultsBox key="ResultsBox" points={ this.state.points } resultsMeta={ this.props.resultsMeta } />
+					});
+				}
+			);
+		}
+		
 	}, 
 
 	getInitialState: function(){
-		return ({ component: <div /> });
+		return ({ 
+			component: <div />,
+			points: 0,
+		});
 	},
 
-
 	render: function(){
-
 		return(
 			this.state.component
 		);
@@ -37,21 +67,20 @@ var ResultsLoad = React.createClass({
 var ResultsBox = React.createClass({
 
 	render: function(){
-
 		var points = this.props.points;
 		var resultsMetas = this.props.resultsMeta;
 		var resultMetaToUse = [];
 
+		var runOnMount = true;
+
 		resultsMetas.forEach( function( item, index, array ){
-			if( points > item.results_lower_bound && points <= item.results_upper_bound ){
+			if( points >= parseInt( item.results_lower_bound, 10 ) && points <= parseInt( item.results_upper_bound, 10 ) ){
 				resultMetaToUse = item;
 			}
-
 		});
-
 		return(
-			<div className="results-box" key={points} changeResults={ this.props.changeResults } >
-					<ResultsInfo point={points} key={points } resultMetaToUse={resultMetaToUse}  />
+			<div className="results-box">
+				<ResultsInfo points={points} resultMetaToUse={resultMetaToUse} />
 			</div>
 		);
 	}
@@ -60,6 +89,8 @@ var ResultsBox = React.createClass({
 var ResultsInfo = React.createClass({
 
 	resultsInfoMarkup: function( resultsInfo ){
+
+		resultsInfo = ( typeof( resultsInfo ) === 'undefined' || resultsInfo === '' ) ? 'Something has gone wrong. You are outside the answer range but it isn&rsquo;t your fault, whoever set up the quiz did it. Sorry!' : resultsInfo;
 		return {
 			__html: marked( resultsInfo, {sanitize: true} )
 		}
@@ -69,13 +100,25 @@ var ResultsInfo = React.createClass({
 
 		var points = this.props.points;
 		var resultMetaToUse = this.props.resultMetaToUse;
+		var runOnMount = true;
+
+		var Animations = {
+			pulse: velocityHelpers.registerEffect({
+				defaultDuration: 2000,
+    			calls: [
+        			[ { backgroundColorAlpha: 0 }, 1]
+    			]
+			})
+		}
 
 		return(
-			<div>
+		<div>
+			<VelocityTransitionGroup enter={{animation: Animations.pulse}} runOnMount={runOnMount}>
 				<h4>Result: {points} points</h4>
+			</VelocityTransitionGroup>
 				<h3>{resultMetaToUse.results_lower_bound} - {resultMetaToUse.results_upper_bound} {resultMetaToUse.results_title}</h3>
 				<div dangerouslySetInnerHTML={ this.resultsInfoMarkup( resultMetaToUse.results_info )} />
-			</div>
+		</div>
 		);
 	}
 
