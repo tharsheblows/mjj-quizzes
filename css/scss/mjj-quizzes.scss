@@ -1,0 +1,78 @@
+#mjj-quiz{
+	margin-top: 2em;
+
+	.questions-list{
+		font-size: 1.5em;
+		list-style-position: inside;
+
+		.the-question{
+			margin-top: 1em;
+		}
+
+		.results-box{
+			margin-top: 2em;
+			font-size: 1rem;
+			padding: 1em 4em 1.5em;
+			text-align: center;
+			border: 1px solid #ccc;
+			background-color: #f2f2f2;
+
+			p{
+				text-align: left;
+			}
+		}
+	}
+
+	.answer-list{
+		display: flex;
+		justify-content: center;
+		font-size: 1em;
+	}
+
+	button{
+		padding: 1em;
+		margin: 1em;
+		width: 25%;
+
+		&.selected{
+			background: #616161;
+			color: #FFF;
+		}
+	}
+
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 0;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0;
+}
+
+.results-enter {
+  opacity: 0.01;
+}
+
+.results-enter.results-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.results-leave {
+  opacity: 0;
+  display:none;
+}
+
+.results-leave.results-leave-active {
+  opacity: 0;
+}
+
+}

@@ -1,0 +1,48 @@
+#mjj-quiz {
+  margin-top: 2em; }
+  #mjj-quiz .questions-list {
+    font-size: 1.5em;
+    list-style-position: inside; }
+    #mjj-quiz .questions-list .the-question {
+      margin-top: 1em; }
+    #mjj-quiz .questions-list .results-box {
+      margin-top: 2em;
+      font-size: 1rem;
+      padding: 1em 4em 1.5em;
+      text-align: center;
+      border: 1px solid #ccc;
+      background-color: #f2f2f2; }
+      #mjj-quiz .questions-list .results-box p {
+        text-align: left; }
+  #mjj-quiz .answer-list {
+    display: flex;
+    justify-content: center;
+    font-size: 1em; }
+  #mjj-quiz button {
+    padding: 1em;
+    margin: 1em;
+    width: 25%; }
+    #mjj-quiz button.selected {
+      background: #616161;
+      color: #FFF; }
+  #mjj-quiz .example-enter {
+    opacity: 0.01; }
+  #mjj-quiz .example-enter.example-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in; }
+  #mjj-quiz .example-leave {
+    opacity: 0; }
+  #mjj-quiz .example-leave.example-leave-active {
+    opacity: 0; }
+  #mjj-quiz .results-enter {
+    opacity: 0.01; }
+  #mjj-quiz .results-enter.results-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in; }
+  #mjj-quiz .results-leave {
+    opacity: 0;
+    display: none; }
+  #mjj-quiz .results-leave.results-leave-active {
+    opacity: 0; }
+
+/*# sourceMappingURL=mjj-quizzes.css.map */
