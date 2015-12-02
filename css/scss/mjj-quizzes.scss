@@ -19,12 +19,18 @@
 
 			p{
 				text-align: left;
+				font-size: 1rem;
 			}
 
 			h4{
 				background-color: #FFFF00;
 				display: inline-block;
 				padding: 0.5em;
+				margin: 0;
+			}
+
+			h3{
+				margin: 0 0 0.5em 0;
 			}
 		}
 	}
@@ -39,6 +45,8 @@
 		padding: 1em;
 		margin: 1em;
 		width: 25%;
+		background: #f2f2f2;
+		color: #000000;
 
 		&.selected{
 			background: #616161;
