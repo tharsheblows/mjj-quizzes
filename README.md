@@ -7,7 +7,7 @@ Then take the quiz!
 
 ##requirements
 
-This uses the [CMB2 plugin from WebDevStudios](https://github.com/WebDevStudios/CMB2) to make metaboxes, so that must be installed for it to work. I am not sure which version of WP is supported, but it was developed on a 4.4 beta.
+This uses the [CMB2 plugin from WebDevStudios](https://github.com/WebDevStudios/CMB2) to make metaboxes, so that must be installed for it to work. I am not sure which version of WP is supported, but it was developed on a 4.4 beta. And you need the [WP Rest Api plugin}(https://wordpress.org/plugins/rest-api/).  
 
 ###caveats and disclaimers
 
