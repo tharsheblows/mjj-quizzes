@@ -116,9 +116,9 @@ var ResultsInfo = React.createClass({
 		return(
 		<div>
 			<VelocityTransitionGroup enter={{animation: Animations.pulse}} runOnMount={runOnMount}>
-				<h4>Result: {points} points</h4>
+				<h3 className="results-points">Result: {points} points</h3>
 			</VelocityTransitionGroup>
-				<h3>{resultMetaToUse.results_lower_bound} - {resultMetaToUse.results_upper_bound} {resultMetaToUse.results_title}</h3>
+				<h3 className="results-range">{resultMetaToUse.results_lower_bound} - {resultMetaToUse.results_upper_bound} {resultMetaToUse.results_title}</h3>
 				<div dangerouslySetInnerHTML={ this.resultsInfoMarkup( resultMetaToUse.results_info )} />
 		</div>
 		);

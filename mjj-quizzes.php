@@ -38,7 +38,7 @@ class MJJ_Quizzes{
 		add_action( 'wp_enqueue_scripts', array( 'MJJ_Quizzes', 'add_styles' ) );
 
 		register_deactivation_hook( __FILE__, 'flush_rewrite_rules' );
-		register_activation_hook( __FILE__, 'mjj_quizzes_flush_rewrites' );
+		register_activation_hook( __FILE__, array( 'MJJ_Quizzes', 'mjj_quizzes_flush_rewrites' ) );
 	}
 
 	public static function add_styles() {

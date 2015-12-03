@@ -2,8 +2,6 @@
 	margin-top: 2em;
 
 	.questions-list{
-		font-size: 1.5em;
-		list-style-position: inside;
 
 		.the-question{
 			margin-top: 1em;
@@ -22,15 +20,16 @@
 				font-size: 1rem;
 			}
 
-			h4{
-				background-color: #FFFF00;
-				display: inline-block;
-				padding: 0.5em;
-				margin: 0;
-			}
-
 			h3{
-				margin: 0 0 0.5em 0;
+				&.results-points{
+					background-color: #FFFF00;
+					display: inline-block;
+					padding: 0.5em;
+					margin: 0;
+				}
+				&.results-range{
+					margin: 0 0 0.5em 0;
+				}
 			}
 		}
 	}

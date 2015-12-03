@@ -36,7 +36,7 @@ var TheQuestion = React.createClass({
 		var theIndex = this.props.theIndex + 1;
 
 		return( 
-			<div className="the-question">{theIndex}. {theQuestion}</div>
+			<h3 className="the-question">{theIndex}. {theQuestion}</h3>
 		);
 	}
 
@@ -79,13 +79,14 @@ var AllAnswers = React.createClass({
 		var handleChange = this.handleChange;
 		var changeChosen = this.changeChosen;
 		var chosen = this.state.chosen;
+		var clicks = this.state.clicks;
 
 		allAnswers.forEach( function( item, index, array ){
 
 			var isSelected = ( index === chosen ) ? 'yes' : 'no';
 
 			answers.push(
-				<AnAnswer key={index} index={index} isSelected={isSelected} handleChange={handleChange} answerInfo={item} />
+				<AnAnswer key={index} index={index} isSelected={isSelected} clicks={clicks} handleChange={handleChange} answerInfo={item} />
 			);
 		});
 
@@ -113,7 +114,15 @@ var AnAnswer = React.createClass({
 		var answer = answerInfo.answer;
 		var points = answerInfo.points;
 		var theClass = (answerInfo.class !== '' ) ? ' ' + answerInfo.class : '' ;
-		var selected = ( this.props.isSelected === 'yes' ) ? 'selected' : 'not-selected';
+
+		var selected;
+
+		if( this.props.clicks !== 0 ){
+			selected = ( this.props.isSelected === 'yes' ) ? 'selected' : 'not-selected';
+		}
+		else{
+			selected = '';
+		}
 
 		var answerClass = selected + theClass;
 

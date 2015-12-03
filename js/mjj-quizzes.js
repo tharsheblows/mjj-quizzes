@@ -33,7 +33,7 @@ var TheQuestion = React.createClass({
 		var theIndex = this.props.theIndex + 1;
 
 		return React.createElement(
-			"div",
+			"h3",
 			{ className: "the-question" },
 			theIndex,
 			". ",
@@ -77,12 +77,13 @@ var AllAnswers = React.createClass({
 		var handleChange = this.handleChange;
 		var changeChosen = this.changeChosen;
 		var chosen = this.state.chosen;
+		var clicks = this.state.clicks;
 
 		allAnswers.forEach(function (item, index, array) {
 
 			var isSelected = index === chosen ? 'yes' : 'no';
 
-			answers.push(React.createElement(AnAnswer, { key: index, index: index, isSelected: isSelected, handleChange: handleChange, answerInfo: item }));
+			answers.push(React.createElement(AnAnswer, { key: index, index: index, isSelected: isSelected, clicks: clicks, handleChange: handleChange, answerInfo: item }));
 		});
 
 		return React.createElement(
@@ -111,7 +112,14 @@ var AnAnswer = React.createClass({
 		var answer = answerInfo.answer;
 		var points = answerInfo.points;
 		var theClass = answerInfo.class !== '' ? ' ' + answerInfo.class : '';
-		var selected = this.props.isSelected === 'yes' ? 'selected' : 'not-selected';
+
+		var selected;
+
+		if (this.props.clicks !== 0) {
+			selected = this.props.isSelected === 'yes' ? 'selected' : 'not-selected';
+		} else {
+			selected = '';
+		}
 
 		var answerClass = selected + theClass;
 
@@ -334,8 +342,8 @@ var ResultsInfo = React.createClass({
 				VelocityTransitionGroup,
 				{ enter: { animation: Animations.pulse }, runOnMount: runOnMount },
 				React.createElement(
-					'h4',
-					null,
+					'h3',
+					{ className: 'results-points' },
 					'Result: ',
 					points,
 					' points'
@@ -343,7 +351,7 @@ var ResultsInfo = React.createClass({
 			),
 			React.createElement(
 				'h3',
-				null,
+				{ className: 'results-range' },
 				resultMetaToUse.results_lower_bound,
 				' - ',
 				resultMetaToUse.results_upper_bound,
