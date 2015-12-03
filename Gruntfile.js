@@ -58,6 +58,18 @@ module.exports = function( grunt ) {
         		}
       		}
     	},
+    	uglify: {
+			options: {
+				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+			},
+			build: {
+				expand: true,
+				ext: '.min.js',
+          		cwd: 'js',
+				src: '*.js',
+				dest: 'js'
+			}
+		},
     	sass: {
 			build: {
     			files: {
@@ -89,9 +101,12 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( 'grunt-browserify' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-contrib-sass' );
+	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 
 	grunt.registerTask( 'i18n', ['addtextdomain', 'makepot'] );
 	grunt.registerTask( 'readme', ['wp_readme_to_markdown'] );
+
+	grunt.registerTask( 'build', ['browserify:prod', 'uglify', 'sass' ] );
 
 	
 

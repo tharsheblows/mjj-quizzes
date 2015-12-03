@@ -51,7 +51,10 @@ class MJJ_Quizzes{
 	public static function add_scripts() {
 
 		if( is_singular( 'mjj_quiz' ) ){
-			wp_register_script( 'mjj-quiz-script', plugin_dir_url( __FILE__ ) . 'js/mjj-quizzes.js', array(), '20150506', true );
+
+			$suffix = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min'; //.min
+
+			wp_register_script( 'mjj-quiz-script', plugin_dir_url( __FILE__ ) . 'js/mjj-quizzes' . $suffix . '.js', array(), '20150506', true );
 			wp_localize_script( 'mjj-quiz-script', 'quiz_object', array( 'ID' => get_the_ID() ) );
 			wp_enqueue_script( 'mjj-quiz-script' );
 

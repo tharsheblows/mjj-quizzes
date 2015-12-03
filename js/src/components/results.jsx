@@ -2,7 +2,9 @@ var React = require('react');
 
 var marked = require( 'marked' );
 
-import {VelocityTransitionGroup, velocityHelpers} from 'velocity-react';
+var VelocityTransitionGroup = require('velocity-react/velocity-transition-group');
+var velocityHelpers = require( 'velocity-react/velocity-helpers');
+
 require('velocity-animate');
 require('velocity-animate/velocity.ui');
 

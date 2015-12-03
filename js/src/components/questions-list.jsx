@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require( 'react-dom' );
-import {VelocityTransitionGroup} from 'velocity-react';
+var VelocityTransitionGroup = require('velocity-react/velocity-transition-group');
 
 var QuestionBox = require( './question-box.jsx' );
 var ResultsLoad = require( './results.jsx' );

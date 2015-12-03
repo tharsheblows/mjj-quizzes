@@ -1,7 +1,7 @@
 var React = require('react');
 var ReactDOM = require( 'react-dom' );
 var page = require( 'page' );
-var request = require( 'request' );
+var request = require( 'superagent' );
 
 var QuestionsList = require( './questions-list.jsx' );
 
@@ -13,19 +13,17 @@ var Router = React.createClass({
 
 		var self = this;
 
-		var http = location.protocol;
-		var slashes = http.concat("//");
-		var host = slashes.concat(window.location.hostname);
-
 		page( '/quizzes/:slug', function ( ctx ){
 
 			var data,
 				slug = ctx.params.slug,
-				url = host + "/wp-json/wp/v2/mjj-quizzes-api/";
+				url = "/wp-json/wp/v2/mjj-quizzes-api/";
 
-			request( url + quiz_object.ID, function( error, response, body ){
-				var data = JSON.parse( body );
-				self.setState({ component: <QuestionsList data={ data } bodyClass="single-quiz" /> });
+			request
+				.get( url + quiz_object.ID )
+				.end( function( error, response ){
+					var data = JSON.parse( response.text );
+					self.setState({ component: <QuestionsList data={ data } bodyClass="single-quiz" /> });
 			});
 
 		});
