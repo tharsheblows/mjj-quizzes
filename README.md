@@ -9,7 +9,7 @@ Then take the quiz!
 
 - [CMB2 plugin from WebDevStudios](https://github.com/WebDevStudios/CMB2) to make metaboxes
 - I am not sure which version of WP is supported, but it was developed on a 4.4 beta. 
-- The [WP Rest Api plugin](https://wordpress.org/plugins/rest-api/).  
+- The [WP REST API plugin](https://wordpress.org/plugins/rest-api/).  
 
 
 ##caveats and disclaimers
