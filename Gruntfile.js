@@ -57,7 +57,7 @@ module.exports = function( grunt ) {
 				expand: true,
 				ext: '.min.js',
           		cwd: 'js',
-				src: '*.js',
+				src: 'mjj-quizzes.js',
 				dest: 'js'
 			}
 		},
