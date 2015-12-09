@@ -3,6 +3,13 @@
 
 	.questions-list{
 
+		.the-question{
+			p{
+				display: inline-block;
+				margin-left: 1%;
+			}
+		}
+
 		.odd, .even{
 			padding: 2%;
 		}

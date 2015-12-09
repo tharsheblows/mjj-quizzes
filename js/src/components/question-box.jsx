@@ -1,4 +1,5 @@
 var React = require('react');
+var marked = require('marked');
 
 
 var QuestionBox = React.createClass({
@@ -31,14 +32,17 @@ var QuestionBox = React.createClass({
 
 var TheQuestion = React.createClass({
 
-
 	render: function(){
 
-		var theQuestion = this.props.theQuestion;
 		var theIndex = this.props.theIndex + 1;
+		var theQuestion = this.props.theQuestion;
+
+		var theQuestionMarkedIndexed = {
+			__html: theIndex + '. ' + marked( theQuestion, {sanitize: true} )
+		};
 
 		return( 
-			<div className="the-question">{theIndex}. {theQuestion}</div>
+			<div className="the-question" dangerouslySetInnerHTML={theQuestionMarkedIndexed} />
 		);
 	}
 

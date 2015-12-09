@@ -1,5 +1,8 @@
 #mjj-quiz {
   margin-top: 2em; }
+  #mjj-quiz .questions-list .the-question p {
+    display: inline-block;
+    margin-left: 1%; }
   #mjj-quiz .questions-list .odd, #mjj-quiz .questions-list .even {
     padding: 2%; }
   #mjj-quiz .questions-list .results-box {

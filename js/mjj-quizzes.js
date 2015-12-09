@@ -1,5 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var React = require('react');
+var marked = require('marked');
 
 var QuestionBox = React.createClass({
 	displayName: 'QuestionBox',
@@ -31,16 +32,14 @@ var TheQuestion = React.createClass({
 
 	render: function () {
 
-		var theQuestion = this.props.theQuestion;
 		var theIndex = this.props.theIndex + 1;
+		var theQuestion = this.props.theQuestion;
 
-		return React.createElement(
-			'div',
-			{ className: 'the-question' },
-			theIndex,
-			'. ',
-			theQuestion
-		);
+		var theQuestionMarkedIndexed = {
+			__html: theIndex + '. ' + marked(theQuestion, { sanitize: true })
+		};
+
+		return React.createElement('div', { className: 'the-question', dangerouslySetInnerHTML: theQuestionMarkedIndexed });
 	}
 
 });
@@ -136,7 +135,7 @@ var AnAnswer = React.createClass({
 
 module.exports = QuestionBox;
 
-},{"react":171}],2:[function(require,module,exports){
+},{"marked":35,"react":171}],2:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var VelocityTransitionGroup = require('velocity-react/velocity-transition-group');
