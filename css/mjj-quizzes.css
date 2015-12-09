@@ -1,7 +1,7 @@
 #mjj-quiz {
   margin-top: 2em; }
-  #mjj-quiz .questions-list .the-question {
-    margin-top: 1em; }
+  #mjj-quiz .questions-list .odd, #mjj-quiz .questions-list .even {
+    padding: 2%; }
   #mjj-quiz .questions-list .results-box {
     margin-top: 2em;
     font-size: 1rem;

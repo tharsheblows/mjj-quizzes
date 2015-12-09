@@ -2,7 +2,7 @@
 var React = require('react');
 
 var QuestionBox = React.createClass({
-	displayName: "QuestionBox",
+	displayName: 'QuestionBox',
 
 	handleChange: function (numQuestions, changeResults) {
 
@@ -14,18 +14,20 @@ var QuestionBox = React.createClass({
 		var theQuiz = this.props.theQuiz;
 		var theIndex = this.props.index;
 
+		var oddness = this.props.index % 2 === 0 ? 'even' : 'odd';
+
 		return React.createElement(
-			"div",
-			null,
-			React.createElement(TheQuestion, { theIndex: theIndex, theQuestion: theQuiz.the_question, className: "mjj_question" }),
-			React.createElement(AllAnswers, { allAnswers: theQuiz.answers, className: "all_answers", handleChange: this.handleChange, updata: this.props.updata })
+			'div',
+			{ className: oddness },
+			React.createElement(TheQuestion, { theIndex: theIndex, theQuestion: theQuiz.the_question, className: 'mjj_question' }),
+			React.createElement(AllAnswers, { allAnswers: theQuiz.answers, className: 'all_answers', handleChange: this.handleChange, updata: this.props.updata })
 		);
 	}
 
 });
 
 var TheQuestion = React.createClass({
-	displayName: "TheQuestion",
+	displayName: 'TheQuestion',
 
 	render: function () {
 
@@ -33,10 +35,10 @@ var TheQuestion = React.createClass({
 		var theIndex = this.props.theIndex + 1;
 
 		return React.createElement(
-			"h3",
-			{ className: "the-question" },
+			'div',
+			{ className: 'the-question' },
 			theIndex,
-			". ",
+			'. ',
 			theQuestion
 		);
 	}
@@ -44,7 +46,7 @@ var TheQuestion = React.createClass({
 });
 
 var AllAnswers = React.createClass({
-	displayName: "AllAnswers",
+	displayName: 'AllAnswers',
 
 	getInitialState: function () {
 		return {
@@ -87,8 +89,8 @@ var AllAnswers = React.createClass({
 		});
 
 		return React.createElement(
-			"div",
-			{ className: "answer-list" },
+			'div',
+			{ className: 'answer-list' },
 			answers
 		);
 	}
@@ -96,7 +98,7 @@ var AllAnswers = React.createClass({
 });
 
 var AnAnswer = React.createClass({
-	displayName: "AnAnswer",
+	displayName: 'AnAnswer',
 
 	handleChange: function () {
 
@@ -124,8 +126,8 @@ var AnAnswer = React.createClass({
 		var answerClass = selected + theClass;
 
 		return React.createElement(
-			"button",
-			{ className: answerClass, key: selected, "data-points": points, onClick: this.handleChange },
+			'button',
+			{ className: answerClass, key: selected, 'data-points': points, onClick: this.handleChange },
 			answer
 		);
 	}

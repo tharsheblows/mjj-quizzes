@@ -121,7 +121,7 @@ class MJJ_Quizzes_Metaboxes{
 		$quiz_group->add_group_field( $quiz_field_id, array(
 		    'name'       => __( 'Question', 'mjj_quizzes' ),
 		    'id'         => 'the_question',
-		    'type'       => 'text',
+		    'type'       => 'textarea',
 		) );
 
 		// Each question can have multiple answers, each with a 
@@ -189,7 +189,7 @@ class MJJ_Quizzes_Metaboxes{
 		$values = $field_type->field->value;
 
 		$the_answer = ( !empty( $values[ $field_type->iterator ]['answer'] ) ) ? esc_textarea( $values[ $field_type->iterator ]['answer'] ) : '';
-		$the_points = ( !empty( $values[ $field_type->iterator ]['points'] ) ) ? (float)$values[ $field_type->iterator ]['points']  : '';
+		$the_points = ( isset( $values[ $field_type->iterator ]['points'] ) ) ? (float)$values[ $field_type->iterator ]['points']  : '';
 		$the_class = ( !empty( $values[ $field_type->iterator ]['class'] ) ) ? esc_attr( $values[ $field_type->iterator ]['class'] )  : '';
 
 		// print_r( $field_type->iterator ); this is the iterator in the 

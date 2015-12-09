@@ -17,8 +17,10 @@ var QuestionBox = React.createClass({
 		var theQuiz = this.props.theQuiz;
 		var theIndex = this.props.index;
 
+		var oddness = ( this.props.index % 2 === 0 ) ? 'even' : 'odd';
+
 		return( 
-			<div>
+			<div className={oddness}>
 				<TheQuestion theIndex={theIndex} theQuestion={theQuiz.the_question} className="mjj_question" />
 				<AllAnswers allAnswers={theQuiz.answers} className="all_answers" handleChange={this.handleChange} updata={this.props.updata} />
 			</div>
@@ -36,7 +38,7 @@ var TheQuestion = React.createClass({
 		var theIndex = this.props.theIndex + 1;
 
 		return( 
-			<h3 className="the-question">{theIndex}. {theQuestion}</h3>
+			<div className="the-question">{theIndex}. {theQuestion}</div>
 		);
 	}
 
