@@ -5,6 +5,23 @@ var VelocityTransitionGroup = require('velocity-react/velocity-transition-group'
 var QuestionBox = require( './question-box.jsx' );
 var ResultsLoad = require( './results.jsx' );
 
+var QuizInfo = React.createClass({
+
+	render: function(){
+
+		var metaInfo = this.props.data._mjj_quiz_meta_info;
+
+		return(
+			<div>
+				<p className="meta-info">
+					Time required: {metaInfo}<br />
+				</p>
+				<QuestionsList {...this.props} bodyClass="single-quiz" /> 
+			</div>
+		);
+	}
+});
+
 var QuestionsList = React.createClass({
 
 	// this is only checked in development mode
@@ -54,7 +71,7 @@ var QuestionsList = React.createClass({
 		
 		for( var ii = 0; ii < questionsToShow; ii++ ){
 			questions.push(
-				<QuestionBox index={ii} key={ii} theQuiz={the_quiz[ii]} updata={updata} handleChange={this.handleChange} />
+				<QuestionBox index={ii} key={ii} theQuiz={the_quiz[ii]} quizLength={the_quiz_length} updata={updata} handleChange={this.handleChange} />
 			);
 		}
 
@@ -78,4 +95,4 @@ var QuestionsList = React.createClass({
 
 });
 
-module.exports = QuestionsList;
+module.exports = QuizInfo;

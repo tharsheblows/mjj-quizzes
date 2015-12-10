@@ -96,6 +96,20 @@ class MJJ_Quizzes_Metaboxes{
 
     	$prefix = '_mjj_quiz';
 
+    	$quiz_info = new_cmb2_box( array(
+		    'id'           => $prefix . 'info',
+		    'title'        => __( 'Quiz info', 'mjj_quizzes' ),
+		    'object_types' => array( 'mjj_quiz', ),
+		) );
+
+		$quiz_info_id = $quiz_info->add_field( array(
+		    'id'          => $prefix . '_meta_info',
+		    'type'        => 'text',
+		    'name'		  => __('Time needed', 'mjj_quizzes' ),
+		    'description' => 'The time it takes to complete the quiz.'
+		) );
+
+
     	// if I have an issue with losing things, look here: https://github.com/WebDevStudios/CMB2/issues/348
     	// it should be go... 
 

@@ -21,6 +21,16 @@ class MJJ_Quizzes_API{
 
 	public static function register_quiz_meta(){
 
+		register_api_field(
+			'mjj_quiz',
+			'_mjj_quiz_meta_info',
+			array(
+        	    'get_callback'    => array( 'MJJ_Quizzes_API', 'get_quiz_meta_info'),
+        	    'update_callback' => null,
+        	    'schema'          => null,
+			)
+		);
+
 		register_api_field( 
 			'mjj_quiz',
         	'_mjj_quiz_meta',
@@ -40,6 +50,14 @@ class MJJ_Quizzes_API{
         	    'schema'          => null,
         	)
         );
+	}
+
+	public static function get_quiz_meta_info( $object, $field_name, $request ){
+
+		$quiz_meta_info = get_post_meta( $object['id'], $field_name, true );
+
+		return sanitize_text_field( $quiz_meta_info );
+
 	}
 
 	public static function get_quiz_meta( $object, $field_name, $request ){

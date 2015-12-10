@@ -22,9 +22,24 @@ var QuestionBox = React.createClass({
 
 		return( 
 			<div className={oddness}>
-				<TheQuestion theIndex={theIndex} theQuestion={theQuiz.the_question} className="mjj_question" />
+				<TheIndex theIndex={theIndex} quizLength={this.props.quizLength} />
+				<TheQuestion theQuestion={theQuiz.the_question} className="mjj_question" />
 				<AllAnswers allAnswers={theQuiz.answers} className="all_answers" handleChange={this.handleChange} updata={this.props.updata} />
 			</div>
+		);
+	}
+
+});
+
+var TheIndex = React.createClass({
+
+	render: function(){
+
+		var theIndex = this.props.theIndex + 1;
+		var questionXofY = theIndex + ' of ' + this.props.quizLength + ': ';
+		
+		return(
+			<div className="the-index">{questionXofY}</div>
 		);
 	}
 
@@ -34,15 +49,12 @@ var TheQuestion = React.createClass({
 
 	render: function(){
 
-		var theIndex = this.props.theIndex + 1;
-		var theQuestion = this.props.theQuestion;
-
-		var theQuestionMarkedIndexed = {
-			__html: theIndex + '. ' + marked( theQuestion, {sanitize: true} )
-		};
+		var theQuestion = {
+			__html: marked( this.props.theQuestion, {sanitize: true} )
+		}
 
 		return( 
-			<div className="the-question" dangerouslySetInnerHTML={theQuestionMarkedIndexed} />
+			<div className="the-question" dangerouslySetInnerHTML={theQuestion} />
 		);
 	}
 

@@ -3,7 +3,7 @@ var ReactDOM = require( 'react-dom' );
 var page = require( 'page' );
 var request = require( 'superagent' );
 
-var QuestionsList = require( './questions-list.jsx' );
+var QuizInfo = require( './questions-list.jsx' );
 
 
 var Router = React.createClass({
@@ -23,7 +23,7 @@ var Router = React.createClass({
 				.get( url + quiz_object.ID )
 				.end( function( error, response ){
 					var data = JSON.parse( response.text );
-					self.setState({ component: <QuestionsList data={ data } bodyClass="single-quiz" /> });
+					self.setState({ component: <QuizInfo data={ data } bodyClass="single-quiz" /> });
 			});
 
 		});

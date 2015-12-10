@@ -1,13 +1,25 @@
 #mjj-quiz{
-	margin-top: 2em;
+	margin-top: 2%;
 
 	.questions-list{
 
-		.the-question{
+		.the-index, .the-question{
+			display: inline-block;
+			margin: 0;
+			padding: 0;
+
 			p{
-				display: inline-block;
-				margin-left: 1%;
+				padding-top: 0;
+				padding-bottom: 1%;
 			}
+		}
+
+		.the-question{
+			width: 93%;
+		}
+
+		.the-index{
+			width: 7%;
 		}
 
 		.odd, .even{
@@ -15,9 +27,9 @@
 		}
 
 		.results-box{
-			margin-top: 2em;
+			margin-top: 2%;
 			font-size: 1rem;
-			padding: 1em 4em 1.5em;
+			padding: 4%;
 			text-align: center;
 			border: 1px solid #ccc;
 			background-color: #f2f2f2;
@@ -31,11 +43,11 @@
 				&.results-points{
 					background-color: #FFFF00;
 					display: inline-block;
-					padding: 0.5em;
+					padding: 0;
 					margin: 0;
 				}
 				&.results-range{
-					margin: 0 0 0.5em 0;
+					margin: 0.5%;
 				}
 			}
 		}
@@ -48,8 +60,8 @@
 	}
 
 	button{
-		padding: 1em;
-		margin: 1em;
+		padding: 1%;
+		margin: 1% 1% 0 1%;
 		width: 25%;
 		background: #f2f2f2;
 		color: #000000;

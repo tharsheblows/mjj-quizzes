@@ -20,8 +20,26 @@ var QuestionBox = React.createClass({
 		return React.createElement(
 			'div',
 			{ className: oddness },
-			React.createElement(TheQuestion, { theIndex: theIndex, theQuestion: theQuiz.the_question, className: 'mjj_question' }),
+			React.createElement(TheIndex, { theIndex: theIndex, quizLength: this.props.quizLength }),
+			React.createElement(TheQuestion, { theQuestion: theQuiz.the_question, className: 'mjj_question' }),
 			React.createElement(AllAnswers, { allAnswers: theQuiz.answers, className: 'all_answers', handleChange: this.handleChange, updata: this.props.updata })
+		);
+	}
+
+});
+
+var TheIndex = React.createClass({
+	displayName: 'TheIndex',
+
+	render: function () {
+
+		var theIndex = this.props.theIndex + 1;
+		var questionXofY = theIndex + ' of ' + this.props.quizLength + ': ';
+
+		return React.createElement(
+			'div',
+			{ className: 'the-index' },
+			questionXofY
 		);
 	}
 
@@ -32,14 +50,11 @@ var TheQuestion = React.createClass({
 
 	render: function () {
 
-		var theIndex = this.props.theIndex + 1;
-		var theQuestion = this.props.theQuestion;
-
-		var theQuestionMarkedIndexed = {
-			__html: theIndex + '. ' + marked(theQuestion, { sanitize: true })
+		var theQuestion = {
+			__html: marked(this.props.theQuestion, { sanitize: true })
 		};
 
-		return React.createElement('div', { className: 'the-question', dangerouslySetInnerHTML: theQuestionMarkedIndexed });
+		return React.createElement('div', { className: 'the-question', dangerouslySetInnerHTML: theQuestion });
 	}
 
 });
@@ -136,12 +151,36 @@ var AnAnswer = React.createClass({
 module.exports = QuestionBox;
 
 },{"marked":35,"react":171}],2:[function(require,module,exports){
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 var VelocityTransitionGroup = require('velocity-react/velocity-transition-group');
 
 var QuestionBox = require('./question-box.jsx');
 var ResultsLoad = require('./results.jsx');
+
+var QuizInfo = React.createClass({
+	displayName: 'QuizInfo',
+
+	render: function () {
+
+		var metaInfo = this.props.data._mjj_quiz_meta_info;
+
+		return React.createElement(
+			'div',
+			null,
+			React.createElement(
+				'p',
+				{ className: 'meta-info' },
+				'Time required: ',
+				metaInfo,
+				React.createElement('br', null)
+			),
+			React.createElement(QuestionsList, _extends({}, this.props, { bodyClass: 'single-quiz' }))
+		);
+	}
+});
 
 var QuestionsList = React.createClass({
 	displayName: 'QuestionsList',
@@ -191,7 +230,7 @@ var QuestionsList = React.createClass({
 		var questionsToShow = this.state.numQuestions < the_quiz_length ? this.state.numQuestions : the_quiz_length;
 
 		for (var ii = 0; ii < questionsToShow; ii++) {
-			questions.push(React.createElement(QuestionBox, { index: ii, key: ii, theQuiz: the_quiz[ii], updata: updata, handleChange: this.handleChange }));
+			questions.push(React.createElement(QuestionBox, { index: ii, key: ii, theQuiz: the_quiz[ii], quizLength: the_quiz_length, updata: updata, handleChange: this.handleChange }));
 		}
 
 		// we want to show the results after all of the questions have been answered
@@ -215,7 +254,7 @@ var QuestionsList = React.createClass({
 
 });
 
-module.exports = QuestionsList;
+module.exports = QuizInfo;
 
 },{"./question-box.jsx":1,"./results.jsx":4,"react":171,"react-dom":40,"velocity-react/velocity-transition-group":252}],3:[function(require,module,exports){
 var React = require('react');
@@ -373,7 +412,7 @@ var ReactDOM = require('react-dom');
 var page = require('page');
 var request = require('superagent');
 
-var QuestionsList = require('./questions-list.jsx');
+var QuizInfo = require('./questions-list.jsx');
 
 var Router = React.createClass({
 	displayName: 'Router',
@@ -391,7 +430,7 @@ var Router = React.createClass({
 
 			request.get(url + quiz_object.ID).end(function (error, response) {
 				var data = JSON.parse(response.text);
-				self.setState({ component: React.createElement(QuestionsList, { data: data, bodyClass: 'single-quiz' }) });
+				self.setState({ component: React.createElement(QuizInfo, { data: data, bodyClass: 'single-quiz' }) });
 			});
 		});
 
