@@ -24,7 +24,7 @@ class MJJ_Quizzes_CPT{
 		register_post_type( 'mjj_quiz',
 			array(
 				'labels' => array(
-					'name' => __( 'MJJ Quizzes' ),
+					'name' => __( 'Quizzes' ),
 					'singular_name' => __( 'Quiz' ),
 					'add_new' => 'Add New',
 					'add_new_item' => 'Add New Quiz',

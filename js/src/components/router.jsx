@@ -13,11 +13,31 @@ var Router = React.createClass({
 
 		var self = this;
 
+		var pathArray = window.location.pathname.split('/');
+
+		var quizIndex = pathArray.indexOf( 'quizzes' );
+
+		if( quizIndex === -1 ){
+			return;
+		}
+
+		var currentSlug = pathArray[ quizIndex + 1 ];
+
+		if( currentSlug === -1 ){
+			return;
+		}
+
 		page( '/quizzes/:slug', function ( ctx ){
 
 			var data,
 				slug = ctx.params.slug,
 				url = "/wp-json/wp/v2/mjj-quizzes-api/";
+
+			if( slug !== currentSlug ){
+				// I can't imagine this is the best way to do this but we need to be able to get to the other quizzes
+				window.location.href = '/quizzes/' + slug;
+			}
+
 
 			request
 				.get( url + quiz_object.ID )
