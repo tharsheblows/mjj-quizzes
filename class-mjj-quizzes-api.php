@@ -21,7 +21,7 @@ class MJJ_Quizzes_API{
 
 	public static function register_quiz_meta(){
 
-		register_api_field(
+		register_rest_field(
 			'mjj_quiz',
 			'_mjj_quiz_meta_info',
 			array(
@@ -31,7 +31,7 @@ class MJJ_Quizzes_API{
 			)
 		);
 
-		register_api_field( 
+		register_rest_field( 
 			'mjj_quiz',
         	'_mjj_quiz_meta',
        		array(
@@ -41,7 +41,7 @@ class MJJ_Quizzes_API{
         	)
         );
 
-        register_api_field(
+        register_rest_field(
         	'mjj_quiz',
         	'_mjj_quiz_results_meta',
         	array(
