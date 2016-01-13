@@ -52,8 +52,12 @@ var QuestionsList = React.createClass({
 
 		var data = this.props.data;
 		var the_quiz = data._mjj_quiz_meta;
-		var the_quiz_length = the_quiz.length;
+		var the_quiz_length;
 		var the_results = data._mjj_quiz_results_meta;
+
+		if( the_quiz ){
+			the_quiz_length = the_quiz.length;
+		}
 
 		var animateResults = ( this.state.changeResults === the_quiz_length + 1 ) ? 'animate' : 'dont-animate';
 

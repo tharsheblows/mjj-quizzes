@@ -23,8 +23,6 @@ var ResultsLoad = React.createClass({
 			pointsSum = parseInt( item.getAttribute('data-points'), 10 ) + parseInt( pointsSum, 10 );
 		}
 
-		console.log( pointsSum );
-
 		if( this.props.animateResults === 'animate' ){
 			this.setState(
 				{ points: pointsSum },
@@ -80,8 +78,11 @@ var ResultsBox = React.createClass({
 				resultMetaToUse = item;
 			}
 		});
+
+		var resultsClass = 'results-box ' + resultMetaToUse.results_class;
+
 		return(
-			<div className="results-box">
+			<div className={resultsClass}>
 				<ResultsInfo points={points} resultMetaToUse={resultMetaToUse} />
 			</div>
 		);

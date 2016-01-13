@@ -187,11 +187,17 @@ class MJJ_Quizzes_Metaboxes{
 		) );
 
 		$results_group->add_group_field( $results_field_id, array(
+		    'name'       => __( 'Class', 'mjj_quizzes' ),
+		    'id'         => 'results_class',
+		    'type'       => 'text_small',
+		    'description' => 'Class to add to this results box to change colour or whatever.'		
+		) );
+
+		$results_group->add_group_field( $results_field_id, array(
 		    'name'       => __( 'More information', 'mjj_quizzes' ),
 		    'id'         => 'results_info',
 		    'type'       => 'textarea'		
 		) );
-		
 		
 	}
 

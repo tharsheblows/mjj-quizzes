@@ -212,8 +212,12 @@ var QuestionsList = React.createClass({
 
 		var data = this.props.data;
 		var the_quiz = data._mjj_quiz_meta;
-		var the_quiz_length = the_quiz.length;
+		var the_quiz_length;
 		var the_results = data._mjj_quiz_results_meta;
+
+		if (the_quiz) {
+			the_quiz_length = the_quiz.length;
+		}
 
 		var animateResults = this.state.changeResults === the_quiz_length + 1 ? 'animate' : 'dont-animate';
 
@@ -290,8 +294,6 @@ var ResultsLoad = React.createClass({
 			pointsSum = parseInt(item.getAttribute('data-points'), 10) + parseInt(pointsSum, 10);
 		}
 
-		console.log(pointsSum);
-
 		if (this.props.animateResults === 'animate') {
 			this.setState({ points: pointsSum }, function () {
 				this.setState({
@@ -343,9 +345,12 @@ var ResultsBox = React.createClass({
 				resultMetaToUse = item;
 			}
 		});
+
+		var resultsClass = 'results-box ' + resultMetaToUse.results_class;
+
 		return React.createElement(
 			'div',
-			{ className: 'results-box' },
+			{ className: resultsClass },
 			React.createElement(ResultsInfo, { points: points, resultMetaToUse: resultMetaToUse })
 		);
 	}
