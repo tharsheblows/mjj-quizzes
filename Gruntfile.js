@@ -36,18 +36,24 @@ module.exports = function( grunt ) {
 		},
 		browserify: {
       		dev: {
-        		src: 'js/src/components/*.jsx',
-        		dest: 'js/mjj-quizzes.js'
+        		src: ['js/src/mjj-quizzes-vanilla.js', 'js/src/components/*.jsx'],
+        		dest: 'js/src/mjj-quizzes-components.js'
       		},
       		prod: {
       			src: 'js/src/components/*.jsx',
-        		dest: 'js/mjj-quizzes.js',
+        		dest: 'js/src/mjj-quizzes-components.js',
         		options: {
         			transform: [envify({
                     	NODE_ENV: 'production'
                   	})]
         		}
       		}
+    	},
+    	concat: {
+    		dist: {
+      			src: ['js/src/mjj-quizzes-components.js'],
+      			dest: 'js/mjj-quizzes.js',
+    		}
     	},
     	uglify: {
 			options: {
@@ -78,8 +84,8 @@ module.exports = function( grunt ) {
 			},
 
 			scripts: {
-				files: ['js/src/components/*.jsx'],
-				tasks: ['browserify:dev'],
+				files: ['js/src/components/*.jsx', 'js/src/mjj-quizzes-vanilla.js'],
+				tasks: ['browserify:dev', 'concat'],
 				options: {
 					debounceDelay: 500
 				}
@@ -92,12 +98,13 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( 'grunt-browserify' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-contrib-sass' );
+	grunt.loadNpmTasks( 'grunt-contrib-concat' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 
 	grunt.registerTask( 'i18n', ['addtextdomain', 'makepot'] );
 	grunt.registerTask( 'readme', ['wp_readme_to_markdown'] );
 
-	grunt.registerTask( 'build', ['browserify:prod', 'uglify', 'sass' ] );
+	grunt.registerTask( 'build', ['browserify:prod', 'concat', 'uglify', 'sass' ] );
 
 	
 

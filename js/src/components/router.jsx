@@ -27,6 +27,9 @@ var Router = React.createClass({
 			return;
 		}
 
+		// history.redirect( '/', '/quizzes/' );
+		// page.base( '/quizzes' );
+
 		page( '/quizzes/:slug', function ( ctx ){
 
 			var data,
