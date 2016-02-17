@@ -56,8 +56,7 @@ class MJJ_Quizzes{
 
 			$suffix = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min'; //.min
 
-			wp_register_script( 'history-polyfill',  plugin_dir_url( __FILE__ ) . 'js/vendor/history.min.js' );
-			wp_register_script( 'mjj-quiz-script', plugin_dir_url( __FILE__ ) . 'js/mjj-quizzes' . $suffix . '.js', array( 'history-polyfill' ), '20160106', true );
+			wp_register_script( 'mjj-quiz-script', plugin_dir_url( __FILE__ ) . 'js/mjj-quizzes' . $suffix . '.js', array(), '0.3.0', true );
 			wp_localize_script( 'mjj-quiz-script', 'quiz_object', array( 'ID' => get_the_ID() ) );
 			wp_enqueue_script( 'mjj-quiz-script' );
 

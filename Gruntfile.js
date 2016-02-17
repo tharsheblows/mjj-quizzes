@@ -36,16 +36,22 @@ module.exports = function( grunt ) {
 		},
 		browserify: {
       		dev: {
-        		src: ['js/src/mjj-quizzes-vanilla.js', 'js/src/components/*.jsx'],
+				options: {
+           			transform: [['babelify', {presets: ['react']}]]
+        		}, 
+        		src: ['js/src/components/*.jsx'],
         		dest: 'js/src/mjj-quizzes-components.js'
       		},
       		prod: {
       			src: 'js/src/components/*.jsx',
         		dest: 'js/src/mjj-quizzes-components.js',
         		options: {
-        			transform: [envify({
-                    	NODE_ENV: 'production'
-                  	})]
+        			transform: [
+        				envify({
+                    		NODE_ENV: 'production'
+                  		}), 
+                  		['babelify', {presets: ['react']}] 
+                  	]
         		}
       		}
     	},

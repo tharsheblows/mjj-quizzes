@@ -140,10 +140,11 @@ class MJJ_Quizzes_Metaboxes{
 
 		// Each question can have multiple answers, each with a 
 		$quiz_group->add_group_field( $quiz_field_id, array(
-		   'name'       => __( 'Answer', 'mjj_quizzes' ),
-		    'id'         => 'answers',
-		    'type'       => 'quiz_answer',
-		    'repeatable' => true
+		   'name'       	=> __( 'Answer', 'mjj_quizzes' ),
+		    'id'         	=> 'answers',
+		    'type'       	=> 'quiz_answer',
+		   	'escape_cb'		=> array( 'MJJ_Quizzes_Metaboxes', 'cmb2_render_repeatable_answers_callback' ), // this just returns the meta_value, escaping is done in the rendering callback
+		    'repeatable'	=> true
 		) );
 
 		// now for the results box
@@ -199,6 +200,10 @@ class MJJ_Quizzes_Metaboxes{
 		    'type'       => 'textarea'		
 		) );
 		
+	}
+
+	public static function cmb2_render_repeatable_answers_callback( $meta_value ){
+		return $meta_value;
 	}
 
 	public static function cmb2_render_answer_field_callback( $field, $value, $object_id, $object_type, $field_type ) {
