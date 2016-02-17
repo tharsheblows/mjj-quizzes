@@ -1,6 +1,5 @@
 var React = require('react');
 var ReactDOM = require( 'react-dom' );
-var VelocityTransitionGroup = require('velocity-react/velocity-transition-group');
 
 var QuestionBox = require( './question-box.jsx' );
 var ResultsLoad = require( './results.jsx' );
@@ -59,16 +58,14 @@ var QuestionsList = React.createClass({
 			the_quiz_length = the_quiz.length;
 		}
 
-		var animateResults = ( this.state.changeResults === the_quiz_length + 1 ) ? 'animate' : 'dont-animate';
-
-		// I need this because I can't pass a boolean true through jsx so it has to be in a variable
-		var runOnMount = true;
-
 		// this is the data we will pass through all of our components to correctly update QuestionsList
 		var updata = {
 			changeResults: this.state.changeResults,
 			numQuestions: this.state.numQuestions
 		}
+
+		// I only want to animate the first results load. I'll keep track of it here as this is the parent for all the elements which affect it
+		var animateResults = ( this.state.changeResults === the_quiz_length + 1 ) ? 'animate' : 'dont-animate';
 
 		// how many questions should be showing? We're doing them one at a time
 		var questionsToShow = ( this.state.numQuestions < the_quiz_length ) ? this.state.numQuestions : the_quiz_length;
@@ -83,15 +80,13 @@ var QuestionsList = React.createClass({
 		if( this.state.numQuestions > the_quiz_length && this.state.changeResults > the_quiz_length ){
 			results.push(
 				// the key is this.state.changeResults which, when changed, causes it to re-render key={this.state.changeResults}
-				<ResultsLoad key={this.state.changeResults} resultsMeta={the_results} id="results" animateResults={animateResults} />
+				<ResultsLoad key={this.state.changeResults} resultsMeta={the_results} animateResults={ animateResults } id="results"/>
 			);
 		}
 
 		return(
 			<div className="questions-list" id="mjj-quiz-questions">
-				<VelocityTransitionGroup enter={{animation: "fadeIn", duration: 250}} leave={{animation: "fadeOut"}} runOnMount={runOnMount}>
 					{questions}
-				</VelocityTransitionGroup>
 					{results}
 			</div>
 		);

@@ -1,9 +1,15 @@
 var React = require('react');
-var marked = require('marked');
+var ReactDOM = require( 'react-dom' );
+
+var Remarkable = require('remarkable');
+var md = new Remarkable({linkify: true});
 
 
 var QuestionBox = React.createClass({
 
+	componentDidMount: function(){
+		jQuery( '#mjj-quiz .question-box.new' ).velocity( 'fadeIn', {duration: 250} ).removeClass( 'new' );
+	},
 
 	handleChange: function( numQuestions, changeResults ){
 
@@ -18,7 +24,7 @@ var QuestionBox = React.createClass({
 		var theQuiz = this.props.theQuiz;
 		var theIndex = this.props.index;
 
-		var oddness = ( this.props.index % 2 === 0 ) ? 'even' : 'odd';
+		var oddness = ( this.props.index % 2 === 0 ) ? 'even question-box new' : 'odd question-box new';
 
 		return( 
 			<div className={oddness}>
@@ -50,7 +56,7 @@ var TheQuestion = React.createClass({
 	render: function(){
 
 		var theQuestion = {
-			__html: marked( this.props.theQuestion, {sanitize: true} )
+			__html: md.render( this.props.theQuestion )
 		}
 
 		return( 

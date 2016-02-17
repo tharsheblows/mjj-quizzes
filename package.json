@@ -19,6 +19,7 @@
     "react": "^0.14.3",
     "react-addons-css-transition-group": "^0.14.3",
     "react-dom": "^0.14.3",
+    "remarkable": "^1.6.2",
     "superagent": "^1.4.0",
     "velocity-react": "^1.1.1"
   }

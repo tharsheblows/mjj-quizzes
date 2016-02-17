@@ -1,12 +1,7 @@
 var React = require('react');
 
-var marked = require( 'marked' );
-
-var VelocityTransitionGroup = require('velocity-react/velocity-transition-group');
-var velocityHelpers = require( 'velocity-react/velocity-helpers');
-
-require('velocity-animate');
-require('velocity-animate/velocity.ui');
+var Remarkable = require( 'remarkable' );
+var md = new Remarkable({linkify: true});
 
 var ResultsLoad = React.createClass({
 
@@ -16,40 +11,25 @@ var ResultsLoad = React.createClass({
 		var allPointsNodesList = document.querySelectorAll( '#mjj-quiz-questions button.selected' );
 		var pointsSum = 0;
 
-		var runOnMount = true;
-
 		for (var i = 0; i < allPointsNodesList.length; ++i) {
 			var item = allPointsNodesList[i];
 			pointsSum = parseInt( item.getAttribute('data-points'), 10 ) + parseInt( pointsSum, 10 );
 		}
 
-		if( this.props.animateResults === 'animate' ){
-			this.setState(
-				{ points: pointsSum },
-				function (){
-					this.setState({
-						component: 
-							<VelocityTransitionGroup enter={{animation: "fadeIn", duration: 500}} leave={{animation: "fadeOut"}} runOnMount={runOnMount}>
-								<div><ResultsBox key="ResultsBox" points={ this.state.points } resultsMeta={ this.props.resultsMeta } /></div>
-							</VelocityTransitionGroup>,
-					});
+		this.setState(
+			{ points: pointsSum },
+			function (){
+				this.setState({
+					component: 
+						<ResultsBox key="ResultsBox" points={ this.state.points } resultsMeta={ this.props.resultsMeta } animateResults={ this.props.animateResults } />
 				});
-		}
-		else{
-			this.setState(
-				{ points: pointsSum },
-				function (){
-					this.setState({
-						component: 
-							<ResultsBox key="ResultsBox" points={ this.state.points } resultsMeta={ this.props.resultsMeta } />
-					});
-				}
-			);
-		}
+			}
+		);
 		
 	}, 
 
 	getInitialState: function(){
+		var initial_class = 'results-box-box';
 		return ({ 
 			component: <div />,
 			points: 0,
@@ -66,12 +46,20 @@ var ResultsLoad = React.createClass({
 
 var ResultsBox = React.createClass({
 
+	componentDidMount: function(){
+		jQuery( '#mjj-quiz .results-box.animate' ).velocity( 'fadeIn', {duration: 250} );
+	},
+
 	render: function(){
 		var points = this.props.points;
 		var resultsMetas = this.props.resultsMeta;
 		var resultMetaToUse = [];
+		var animate = 'dont-animate ';
 
-		var runOnMount = true;
+		if( this.props.animateResults === 'animate' ){
+			animate = 'animate ';
+		}
+
 
 		resultsMetas.forEach( function( item, index, array ){
 			if( points >= parseInt( item.results_lower_bound, 10 ) && points <= parseInt( item.results_upper_bound, 10 ) ){
@@ -79,7 +67,7 @@ var ResultsBox = React.createClass({
 			}
 		});
 
-		var resultsClass = 'results-box ' + resultMetaToUse.results_class;
+		var resultsClass = 'results-box ' + animate + resultMetaToUse.results_class;
 
 		return(
 			<div className={resultsClass}>
@@ -95,7 +83,7 @@ var ResultsInfo = React.createClass({
 
 		resultsInfo = ( typeof( resultsInfo ) === 'undefined' || resultsInfo === '' ) ? 'Something has gone wrong. You are outside the answer range but it isn&rsquo;t your fault, whoever set up the quiz did it. Sorry!' : resultsInfo;
 		return {
-			__html: marked( resultsInfo, {sanitize: true} )
+			__html: md.render( resultsInfo )
 		}
 	},
 
@@ -103,22 +91,10 @@ var ResultsInfo = React.createClass({
 
 		var points = this.props.points;
 		var resultMetaToUse = this.props.resultMetaToUse;
-		var runOnMount = true;
-
-		var Animations = {
-			pulse: velocityHelpers.registerEffect({
-				defaultDuration: 2000,
-    			calls: [
-        			[ { backgroundColorAlpha: 0 }, 1]
-    			]
-			})
-		}
 
 		return(
 		<div>
-			<VelocityTransitionGroup enter={{animation: Animations.pulse}} runOnMount={runOnMount}>
 				<h3 className="results-points">Result: {points} points</h3>
-			</VelocityTransitionGroup>
 				<h3 className="results-range">{resultMetaToUse.results_lower_bound} - {resultMetaToUse.results_upper_bound} {resultMetaToUse.results_title}</h3>
 				<div dangerouslySetInnerHTML={ this.resultsInfoMarkup( resultMetaToUse.results_info )} />
 		</div>

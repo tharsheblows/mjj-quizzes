@@ -1,5 +1,7 @@
 #mjj-quiz {
   margin-top: 2%; }
+  #mjj-quiz .questions-list .question-box {
+    display: none; }
   #mjj-quiz .questions-list .the-index, #mjj-quiz .questions-list .the-question {
     display: inline-block;
     margin: 0;
@@ -30,6 +32,8 @@
       margin: 0; }
     #mjj-quiz .questions-list .results-box h3.results-range {
       margin: 0.5%; }
+    #mjj-quiz .questions-list .results-box.animate {
+      display: none; }
   #mjj-quiz .answer-list {
     display: flex;
     justify-content: center;

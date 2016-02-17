@@ -57,9 +57,8 @@ class MJJ_Quizzes{
 			$suffix = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min'; //.min
 
 			wp_register_script( 'mjj-quiz-script', plugin_dir_url( __FILE__ ) . 'js/mjj-quizzes' . $suffix . '.js', array(), '0.3.0', true );
-			wp_localize_script( 'mjj-quiz-script', 'quiz_object', array( 'ID' => get_the_ID() ) );
+			wp_localize_script( 'mjj-quiz-script', 'quiz_object', array( 'ID' => get_the_ID(), 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 			wp_enqueue_script( 'mjj-quiz-script' );
-
 
 		}
 

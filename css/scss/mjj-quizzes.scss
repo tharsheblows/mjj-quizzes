@@ -3,6 +3,10 @@
 
 	.questions-list{
 
+		.question-box{
+			display: none;
+		}
+
 		.the-index, .the-question{
 			display: inline-block;
 			margin: 0;
@@ -49,6 +53,10 @@
 				&.results-range{
 					margin: 0.5%;
 				}
+			}
+
+			&.animate{
+				display: none;
 			}
 		}
 	}
