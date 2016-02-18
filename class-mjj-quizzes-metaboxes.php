@@ -298,7 +298,7 @@ class MJJ_Quizzes_Metaboxes{
 
 							$save_quiz[ $i ]['answers'][ $j ][ 'answer' ] = implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $answer['answer' ] ) ) );
 							$save_quiz[ $i ]['answers'][ $j ][ 'points' ] = (int)$answer['points'];
-							$save_quiz[ $i ]['answers'][ $j ][ 'class' ] = esc_attr( $answer['class'] );
+							$save_quiz[ $i ]['answers'][ $j ][ 'class' ] = sanitize_html_class( $answer['class'] );
 	
 							$j++;
 						}

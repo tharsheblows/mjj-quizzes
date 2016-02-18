@@ -26,18 +26,14 @@ class MJJ_Quizzes_API{
 			'_mjj_quiz_meta_info',
 			array(
         	    'get_callback'    => array( 'MJJ_Quizzes_API', 'get_quiz_meta_info'),
-        	    'update_callback' => null,
-        	    'schema'          => null,
 			)
 		);
 
 		register_rest_field( 
-			'mjj_quiz',
-        	'_mjj_quiz_meta',
+			'mjj_quiz', // the cpt or object type
+        	'_mjj_quiz_meta', // $field_name in callback function
        		array(
         	    'get_callback'    => array( 'MJJ_Quizzes_API', 'get_quiz_meta'),
-        	    'update_callback' => null,
-        	    'schema'          => null,
         	)
         );
 
@@ -46,8 +42,6 @@ class MJJ_Quizzes_API{
         	'_mjj_quiz_results_meta',
         	array(
         	    'get_callback'    => array( 'MJJ_Quizzes_API', 'get_quiz_results_meta'),
-        	    'update_callback' => null,
-        	    'schema'          => null,
         	)
         );
 	}
@@ -63,13 +57,14 @@ class MJJ_Quizzes_API{
 	public static function get_quiz_meta( $object, $field_name, $request ){
 
 		$quiz_meta_array = get_post_meta( $object[ 'id' ], $field_name );
+		$parsedown = new Parsedown();
 
 		foreach( $quiz_meta_array[0] as $quiz_meta ){
 
 			foreach( $quiz_meta as $key => $value ){
 	
 				if( $key === 'the_question' ){
-					$esc_quiz_meta[ 'the_question' ] =implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $value ) ) );
+					$esc_quiz_meta[ 'the_question' ] =  wpautop( wp_kses( $parsedown->text( $value ), MJJ_Quizzes::$allowed_html ) );
 				}
 	
 				if( $key === 'answers' ){
@@ -77,7 +72,7 @@ class MJJ_Quizzes_API{
 					$esc_quiz_meta[ 'answers' ] = array();
 
 					foreach( $value as $answer ){
-						$esc_quiz_meta[ 'answers' ][$i][ 'answer' ] = implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $answer['answer' ] ) ) );
+						$esc_quiz_meta[ 'answers' ][$i][ 'answer' ] =  wpautop( wp_kses( $parsedown->text( $answer['answer' ] ), MJJ_Quizzes::$allowed_html ) );
 						$esc_quiz_meta[ 'answers' ][$i][ 'points' ] = (float)$answer['points'];
 						$esc_quiz_meta[ 'answers' ][$i][ 'class' ] = esc_attr( $answer['class'] );
 
@@ -97,6 +92,7 @@ class MJJ_Quizzes_API{
 	public static function get_quiz_results_meta( $object, $field_name, $request ){
 
 		$quiz_results_meta_array = get_post_meta( $object[ 'id' ], '_mjj_quiz_results_meta' );
+		$parsedown = new Parsedown();
 
 		foreach( $quiz_results_meta_array[0] as $quiz_results_meta ){
 
@@ -104,8 +100,14 @@ class MJJ_Quizzes_API{
 				if( $key === 'results_lower_bound' || $key === 'results_upper_bound' ){
 					$esc_quiz_meta[ $key ] = (float)$value;
 				}
+				elseif( $key === 'results_info' ){
+					$esc_quiz_meta[ $key ] = wpautop( wp_kses( $parsedown->text( $value ),  MJJ_Quizzes::$allowed_html ) );
+				}
+				elseif( $key === 'results_title' ){
+					$esc_quiz_meta[ $key ] = sanitize_text_field( $value );
+				}
 				else{
-					$esc_quiz_meta[ $key ] = implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $value ) ) );
+					$esc_quiz_meta[ $key ] = esc_attr( $value );
 				}
 			}
 			// because cmb2 seems to not save 0

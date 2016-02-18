@@ -1,9 +1,7 @@
 var React = require('react');
-var ReactDOM = require( 'react-dom' );
-
-var Remarkable = require('remarkable');
-var md = new Remarkable({linkify: true});
-
+var TheIndex = require( './the-index.jsx' );
+var TheQuestion = require( './the-question.jsx' );
+var AllAnswers = require( './all-answers.jsx' );
 
 var QuestionBox = React.createClass({
 
@@ -36,126 +34,5 @@ var QuestionBox = React.createClass({
 	}
 
 });
-
-var TheIndex = React.createClass({
-
-	render: function(){
-
-		var theIndex = this.props.theIndex + 1;
-		var questionXofY = theIndex + ' of ' + this.props.quizLength + ': ';
-		
-		return(
-			<div className="the-index">{questionXofY}</div>
-		);
-	}
-
-});
-
-var TheQuestion = React.createClass({
-
-	render: function(){
-
-		var theQuestion = {
-			__html: md.render( this.props.theQuestion )
-		}
-
-		return( 
-			<div className="the-question" dangerouslySetInnerHTML={theQuestion} />
-		);
-	}
-
-});
-
-var AllAnswers = React.createClass({
-
-	getInitialState: function(){
-		return{
-			chosen: false,
-			clicks: 0
-		}
-	},
-
-	handleChange: function( numQuestions, changeResults, chosenId ){
-
-		this.setState( {
-			clicks: this.state.clicks + 1
-		} );
-
-		numQuestions = ( this.state.clicks === 0 ) ? this.props.updata.numQuestions + 1 : this.props.updata.numQuestions;
-		changeResults = this.props.updata.changeResults + 1;
-
-		this.props.handleChange( 
-			numQuestions,
-			changeResults
-		);
-
-		this.setState({
-			chosen: chosenId
-		});
-
-	},
-
-	render: function(){
-
-		var allAnswers = this.props.allAnswers;
-		var answers = [];
-
-		var handleChange = this.handleChange;
-		var changeChosen = this.changeChosen;
-		var chosen = this.state.chosen;
-		var clicks = this.state.clicks;
-
-		allAnswers.forEach( function( item, index, array ){
-
-			var isSelected = ( index === chosen ) ? 'yes' : 'no';
-
-			answers.push(
-				<AnAnswer key={index} index={index} isSelected={isSelected} clicks={clicks} handleChange={handleChange} answerInfo={item} />
-			);
-		});
-
-		return( 
-				<div className="answer-list">{answers}</div>
-		);
-	}
-
-});
-
-var AnAnswer = React.createClass({
-
-	handleChange: function(){
-
-		this.props.handleChange( 
-			1, // we'll let theAnswers decide what to do, let's just let it know there's been a click here
-			1, // we'll let theAnswers decide what to do, let's just let it know there's been a click here
-			this.props.index // this sets the selected state
-		);
-	},
-
-	render: function(){
-
-		var answerInfo = this.props.answerInfo;
-		var answer = answerInfo.answer;
-		var points = answerInfo.points;
-		var theClass = (answerInfo.class !== '' ) ? ' ' + answerInfo.class : '' ;
-
-		var selected;
-
-		if( this.props.clicks !== 0 ){
-			selected = ( this.props.isSelected === 'yes' ) ? 'selected' : 'not-selected';
-		}
-		else{
-			selected = '';
-		}
-
-		var answerClass = selected + theClass;
-
-		return( 
-			<button className={answerClass} key={selected} data-points={points} onClick={ this.handleChange }>{answer}</button>
-		);
-	}
-
-});
-
 
 module.exports = QuestionBox;

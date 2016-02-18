@@ -1,25 +1,7 @@
 var React = require('react');
-var ReactDOM = require( 'react-dom' );
-
 var QuestionBox = require( './question-box.jsx' );
-var ResultsLoad = require( './results.jsx' );
+var ResultsLoad = require( './results-box.jsx' );
 
-var QuizInfo = React.createClass({
-
-	render: function(){
-
-		var metaInfo = this.props.data._mjj_quiz_meta_info;
-
-		return(
-			<div>
-				<p className="meta-info">
-					Time required: {metaInfo}<br />
-				</p>
-				<QuestionsList {...this.props} bodyClass="single-quiz" /> 
-			</div>
-		);
-	}
-});
 
 var QuestionsList = React.createClass({
 
@@ -94,4 +76,4 @@ var QuestionsList = React.createClass({
 
 });
 
-module.exports = QuizInfo;
+module.exports = QuestionsList;

@@ -12,6 +12,7 @@
 require_once( plugin_dir_path( __FILE__ ) . 'class-mjj-quizzes-cpt.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'class-mjj-quizzes-metaboxes.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'class-mjj-quizzes-api.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'vendor/Parsedown.php' );
 
 MJJ_Quizzes::get_instance();
 MJJ_Quizzes_CPT::get_instance();
@@ -21,6 +22,24 @@ MJJ_Quizzes_API::get_instance();
 class MJJ_Quizzes{
 
 	protected static $instance = null;
+
+	public static $allowed_html = array(
+	    'a' 	=> array(
+	        'href' 	=> array(),
+	        'title' => array(),
+	        'class' => array()
+	    ),
+	    'br' 	=> array(),
+	    'em' 	=> array(),
+	    'strong' => array(),
+	    'p'		=> array(
+	    	'class' => array()
+	    ),
+	    'img'	=> array(
+	    	'src' 	=> array(),
+	    	'class' => array()
+	    )
+	);
 
 	public static function get_instance() {
 
