@@ -137,7 +137,7 @@ module.exports = QuestionBox;
 },{"./all-answers.jsx":1,"./the-index.jsx":11,"./the-question.jsx":12,"react":170}],4:[function(require,module,exports){
 var React = require('react');
 var QuestionBox = require('./question-box.jsx');
-var ResultsLoad = require('./results-box.jsx');
+var ResultsLoad = require('./results-load.jsx');
 
 var QuestionsList = React.createClass({
 	displayName: 'QuestionsList',
@@ -211,7 +211,7 @@ var QuestionsList = React.createClass({
 
 module.exports = QuestionsList;
 
-},{"./question-box.jsx":3,"./results-box.jsx":7,"react":170}],5:[function(require,module,exports){
+},{"./question-box.jsx":3,"./results-load.jsx":9,"react":170}],5:[function(require,module,exports){
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var React = require('react');

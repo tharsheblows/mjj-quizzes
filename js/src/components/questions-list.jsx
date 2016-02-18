@@ -1,6 +1,6 @@
 var React = require('react');
 var QuestionBox = require( './question-box.jsx' );
-var ResultsLoad = require( './results-box.jsx' );
+var ResultsLoad = require( './results-load.jsx' );
 
 
 var QuestionsList = React.createClass({
