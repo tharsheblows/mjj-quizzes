@@ -52,7 +52,10 @@ class MJJ_Quizzes{
 	    'img'	=> array(
 	    	'src' 	=> array(),
 	    	'class' => array()
-	    )
+	    ), 
+	    'li'	=> array(),
+	    'ul'	=> array(),
+	    'blockquote'	=> array()
 	);
 
 	public static function get_instance() {
@@ -89,7 +92,7 @@ class MJJ_Quizzes{
 
 			$suffix = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min'; //.min
 
-			wp_register_script( 'mjj-quiz-script', plugin_dir_url( __FILE__ ) . 'js/mjj-quizzes' . $suffix . '.js', array(), '0.3.1', true );
+			wp_register_script( 'mjj-quiz-script', plugin_dir_url( __FILE__ ) . 'js/mjj-quizzes' . $suffix . '.js', array(), '0.3.2', true );
 			wp_localize_script( 'mjj-quiz-script', 'quiz_object', array( 'ID' => get_the_ID(), 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 			wp_enqueue_script( 'mjj-quiz-script' );
 
