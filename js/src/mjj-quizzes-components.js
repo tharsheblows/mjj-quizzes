@@ -390,7 +390,10 @@ var Router = React.createClass({
 		var self = this;
 
 		self.serverRequest = jQuery.get(quizUrl, function (data) {
-			self.setState({ component: React.createElement(QuizInfo, { data: data, bodyClass: 'single-quiz' }) });
+
+			if (data._mjj_quiz_meta != null && data._mjj_quiz_meta.length > 0) {
+				self.setState({ component: React.createElement(QuizInfo, { data: data, bodyClass: 'single-quiz' }) });
+			}
 		});
 	},
 

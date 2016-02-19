@@ -58,6 +58,11 @@ class MJJ_Quizzes_API{
 
 		$quiz_meta_array = get_post_meta( $object[ 'id' ], $field_name );
 		$parsedown = new Parsedown();
+		$esc_quiz_meta_array = array();
+
+		if( empty( $quiz_meta_array ) || !is_array( $quiz_results_meta_array[0] ) ){
+			return $esc_quiz_meta_array; // this is a quiz page without a quiz
+		}
 
 		foreach( $quiz_meta_array[0] as $quiz_meta ){
 
@@ -92,7 +97,12 @@ class MJJ_Quizzes_API{
 	public static function get_quiz_results_meta( $object, $field_name, $request ){
 
 		$quiz_results_meta_array = get_post_meta( $object[ 'id' ], '_mjj_quiz_results_meta' );
+		$esc_quiz_meta_array = array();
 		$parsedown = new Parsedown();
+
+		if( empty( $quiz_results_meta_array ) || !is_array( $quiz_results_meta_array[0] ) ){
+			return $esc_quiz_meta_array; // this is a quiz page without a quiz
+		}
 
 		foreach( $quiz_results_meta_array[0] as $quiz_results_meta ){
 
