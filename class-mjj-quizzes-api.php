@@ -60,7 +60,7 @@ class MJJ_Quizzes_API{
 		$parsedown = new Parsedown();
 		$esc_quiz_meta_array = array();
 
-		if( empty( $quiz_meta_array ) || !is_array( $quiz_results_meta_array[0] ) ){
+		if( empty( $quiz_meta_array ) || !is_array( $quiz_meta_array[0] ) ){
 			return $esc_quiz_meta_array; // this is a quiz page without a quiz
 		}
 
@@ -69,7 +69,7 @@ class MJJ_Quizzes_API{
 			foreach( $quiz_meta as $key => $value ){
 	
 				if( $key === 'the_question' ){
-					$esc_quiz_meta[ 'the_question' ] =  wpautop( wp_kses( $parsedown->text( $value ), MJJ_Quizzes::$allowed_html ) );
+					$esc_quiz_meta[ 'the_question' ] =  ( !empty( $value ) ) ? wpautop( wp_kses( $parsedown->text( $value ), MJJ_Quizzes::$allowed_html ) ) : '';
 				}
 	
 				if( $key === 'answers' ){
@@ -77,9 +77,9 @@ class MJJ_Quizzes_API{
 					$esc_quiz_meta[ 'answers' ] = array();
 
 					foreach( $value as $answer ){
-						$esc_quiz_meta[ 'answers' ][$i][ 'answer' ] =  wpautop( wp_kses( $parsedown->text( $answer['answer' ] ), MJJ_Quizzes::$allowed_html ) );
-						$esc_quiz_meta[ 'answers' ][$i][ 'points' ] = (float)$answer['points'];
-						$esc_quiz_meta[ 'answers' ][$i][ 'class' ] = esc_attr( $answer['class'] );
+						$esc_quiz_meta[ 'answers' ][$i][ 'answer' ] =  ( !empty( $answer['answer'] ) ) ? wpautop( wp_kses( $parsedown->text( $answer['answer' ] ), MJJ_Quizzes::$allowed_html ) ) : '';
+						$esc_quiz_meta[ 'answers' ][$i][ 'points' ] = ( !empty( $answer['points'] ) ) ? (float)$answer['points'] : 0;
+						$esc_quiz_meta[ 'answers' ][$i][ 'class' ] = ( !empty( $answer['class'] ) ) ? esc_attr( $answer['class'] ) : '';
 
 						$i++;
 					}
