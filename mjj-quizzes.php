@@ -88,11 +88,14 @@ class MJJ_Quizzes{
 
 	public static function add_scripts() {
 
+		wp_register_script( 'velocity', plugin_dir_url( __FILE__ ) . 'js/vendor/velocity.min.js' );
+		wp_register_script( 'velocity-ui', plugin_dir_url( __FILE__ ) . 'js/vendor/velocity.ui.min.js', array( 'velocity' ) );
+
 		if( is_singular( 'mjj_quiz' ) ){
 
 			$suffix = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min'; //.min
 
-			wp_register_script( 'mjj-quiz-script', plugin_dir_url( __FILE__ ) . 'js/mjj-quizzes' . $suffix . '.js', array(), '0.4.0', true );
+			wp_register_script( 'mjj-quiz-script', plugin_dir_url( __FILE__ ) . 'js/mjj-quizzes' . $suffix . '.js', array( 'velocity-ui' ), '0.4.0', true );
 			wp_localize_script( 'mjj-quiz-script', 'quiz_object', array( 'ID' => get_the_ID(), 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 			wp_enqueue_script( 'mjj-quiz-script' );
 
