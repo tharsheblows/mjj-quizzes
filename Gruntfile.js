@@ -19,15 +19,6 @@ module.exports = function( grunt ) {
 				}
 			}
 		},
-
-		wp_readme_to_markdown: {
-			your_target: {
-				files: {
-					'README.md': 'readme.txt'
-				}
-			},
-		},
-
 		makepot: {
 			target: {
 				options: {
@@ -45,19 +36,43 @@ module.exports = function( grunt ) {
 		},
 		browserify: {
       		dev: {
-        		src: 'js/src/components/*.jsx',
-        		dest: 'js/mjj-quizzes.js'
+				options: {
+           			transform: [['babelify', {presets: ['react']}]]
+        		}, 
+        		src: ['js/src/components/*.jsx'],
+        		dest: 'js/src/mjj-quizzes-components.js'
       		},
       		prod: {
       			src: 'js/src/components/*.jsx',
-        		dest: 'js/mjj-quizzes.js',
+        		dest: 'js/src/mjj-quizzes-components.js',
         		options: {
-        			transform: [envify({
-                    	NODE_ENV: 'production'
-                  	})]
+        			transform: [
+        				envify({
+                    		NODE_ENV: 'production'
+                  		}), 
+                  		['babelify', {presets: ['react']}] 
+                  	]
         		}
       		}
     	},
+    	concat: {
+    		dist: {
+      			src: ['js/src/mjj-quizzes-components.js'],
+      			dest: 'js/mjj-quizzes.js',
+    		}
+    	},
+    	uglify: {
+			options: {
+				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+			},
+			build: {
+				expand: true,
+				ext: '.min.js',
+          		cwd: 'js',
+				src: 'mjj-quizzes.js',
+				dest: 'js'
+			}
+		},
     	sass: {
 			build: {
     			files: {
@@ -75,8 +90,8 @@ module.exports = function( grunt ) {
 			},
 
 			scripts: {
-				files: ['js/src/components/*.jsx'],
-				tasks: ['browserify:dev'],
+				files: ['js/src/components/*.jsx', 'js/src/mjj-quizzes-vanilla.js'],
+				tasks: ['browserify:dev', 'concat'],
 				options: {
 					debounceDelay: 500
 				}
@@ -89,9 +104,13 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks( 'grunt-browserify' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.loadNpmTasks( 'grunt-contrib-sass' );
+	grunt.loadNpmTasks( 'grunt-contrib-concat' );
+	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 
 	grunt.registerTask( 'i18n', ['addtextdomain', 'makepot'] );
 	grunt.registerTask( 'readme', ['wp_readme_to_markdown'] );
+
+	grunt.registerTask( 'build', ['browserify:prod', 'concat', 'uglify', 'sass' ] );
 
 	
 

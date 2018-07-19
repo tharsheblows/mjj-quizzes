@@ -6,14 +6,13 @@ class MJJ_Quizzes_CPT{
 
 	public static function get_instance() {
 
-		// If the single instance hasn't been set, set it now.
 		if ( null == self::$instance ) {
 			self::$instance = new self;
-		} // end if
+		}
 
 		return self::$instance;
 
-	} // end get_instance
+	}
 
 	private function __construct(){
 		add_action( 'init', array( 'MJJ_Quizzes_CPT', 'create_post_types' ) );
@@ -24,7 +23,7 @@ class MJJ_Quizzes_CPT{
 		register_post_type( 'mjj_quiz',
 			array(
 				'labels' => array(
-					'name' => __( 'MJJ_Quizzes' ),
+					'name' => __( 'Quizzes' ),
 					'singular_name' => __( 'Quiz' ),
 					'add_new' => 'Add New',
 					'add_new_item' => 'Add New Quiz',
@@ -52,7 +51,7 @@ class MJJ_Quizzes_CPT{
 	}
 
 	public static function add_div( $content ){
-		
+		// add a div after the content where the quiz will go
 		if( is_singular( 'mjj_quiz' )  ){
 			$content .= '<div id="mjj-quiz"></div>';
 		}

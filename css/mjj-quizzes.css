@@ -1,31 +1,49 @@
 #mjj-quiz {
-  margin-top: 2em; }
-  #mjj-quiz .questions-list {
-    font-size: 1.5em;
-    list-style-position: inside; }
-    #mjj-quiz .questions-list .the-question {
-      margin-top: 1em; }
-    #mjj-quiz .questions-list .results-box {
-      margin-top: 2em;
-      font-size: 1rem;
-      padding: 1em 4em 1.5em;
-      text-align: center;
-      border: 1px solid #ccc;
-      background-color: #f2f2f2; }
-      #mjj-quiz .questions-list .results-box p {
-        text-align: left; }
-      #mjj-quiz .questions-list .results-box h4 {
-        background-color: #FFFF00;
-        display: inline-block;
-        padding: 0.5em; }
+  margin-top: 2%; }
+  #mjj-quiz .questions-list .question-box {
+    display: none; }
+  #mjj-quiz .questions-list .the-index, #mjj-quiz .questions-list .the-question {
+    display: inline-block;
+    margin: 0;
+    padding: 0; }
+    #mjj-quiz .questions-list .the-index p, #mjj-quiz .questions-list .the-question p {
+      padding-top: 0;
+      padding-bottom: 1%; }
+  #mjj-quiz .questions-list .the-question {
+    width: 93%; }
+  #mjj-quiz .questions-list .the-index {
+    width: 7%; }
+  #mjj-quiz .questions-list .odd, #mjj-quiz .questions-list .even {
+    padding: 2%; }
+  #mjj-quiz .questions-list .results-box {
+    margin-top: 2%;
+    font-size: 1rem;
+    padding: 4%;
+    text-align: center;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2; }
+    #mjj-quiz .questions-list .results-box p {
+      text-align: left;
+      font-size: 1rem; }
+    #mjj-quiz .questions-list .results-box h3.results-points {
+      background-color: #FFFF00;
+      display: inline-block;
+      padding: 0;
+      margin: 0; }
+    #mjj-quiz .questions-list .results-box h3.results-range {
+      margin: 0.5%; }
+    #mjj-quiz .questions-list .results-box.animate {
+      display: none; }
   #mjj-quiz .answer-list {
     display: flex;
     justify-content: center;
     font-size: 1em; }
   #mjj-quiz button {
-    padding: 1em;
-    margin: 1em;
-    width: 25%; }
+    padding: 1%;
+    margin: 1% 1% 0 1%;
+    width: 25%;
+    background: #f2f2f2;
+    color: #000000; }
     #mjj-quiz button.selected {
       background: #616161;
       color: #FFF; }

@@ -96,6 +96,20 @@ class MJJ_Quizzes_Metaboxes{
 
     	$prefix = '_mjj_quiz';
 
+    	$quiz_info = new_cmb2_box( array(
+		    'id'           => $prefix . 'info',
+		    'title'        => __( 'Quiz info', 'mjj_quizzes' ),
+		    'object_types' => array( 'mjj_quiz', ),
+		) );
+
+		$quiz_info_id = $quiz_info->add_field( array(
+		    'id'          => $prefix . '_meta_info',
+		    'type'        => 'text',
+		    'name'		  => __('Time needed', 'mjj_quizzes' ),
+		    'description' => 'The time it takes to complete the quiz.'
+		) );
+
+
     	// if I have an issue with losing things, look here: https://github.com/WebDevStudios/CMB2/issues/348
     	// it should be go... 
 
@@ -121,15 +135,16 @@ class MJJ_Quizzes_Metaboxes{
 		$quiz_group->add_group_field( $quiz_field_id, array(
 		    'name'       => __( 'Question', 'mjj_quizzes' ),
 		    'id'         => 'the_question',
-		    'type'       => 'text',
+		    'type'       => 'textarea',
 		) );
 
 		// Each question can have multiple answers, each with a 
 		$quiz_group->add_group_field( $quiz_field_id, array(
-		   'name'       => __( 'Answer', 'mjj_quizzes' ),
-		    'id'         => 'answers',
-		    'type'       => 'quiz_answer',
-		    'repeatable' => true
+		   'name'       	=> __( 'Answer', 'mjj_quizzes' ),
+		    'id'         	=> 'answers',
+		    'type'       	=> 'quiz_answer',
+		   	'escape_cb'		=> array( 'MJJ_Quizzes_Metaboxes', 'cmb2_render_repeatable_answers_callback' ), // this just returns the meta_value, escaping is done in the rendering callback
+		    'repeatable'	=> true
 		) );
 
 		// now for the results box
@@ -173,12 +188,22 @@ class MJJ_Quizzes_Metaboxes{
 		) );
 
 		$results_group->add_group_field( $results_field_id, array(
+		    'name'       => __( 'Class', 'mjj_quizzes' ),
+		    'id'         => 'results_class',
+		    'type'       => 'text_small',
+		    'description' => 'Class to add to this results box to change colour or whatever.'		
+		) );
+
+		$results_group->add_group_field( $results_field_id, array(
 		    'name'       => __( 'More information', 'mjj_quizzes' ),
 		    'id'         => 'results_info',
 		    'type'       => 'textarea'		
 		) );
 		
-		
+	}
+
+	public static function cmb2_render_repeatable_answers_callback( $meta_value ){
+		return $meta_value;
 	}
 
 	public static function cmb2_render_answer_field_callback( $field, $value, $object_id, $object_type, $field_type ) {
@@ -189,7 +214,7 @@ class MJJ_Quizzes_Metaboxes{
 		$values = $field_type->field->value;
 
 		$the_answer = ( !empty( $values[ $field_type->iterator ]['answer'] ) ) ? esc_textarea( $values[ $field_type->iterator ]['answer'] ) : '';
-		$the_points = ( !empty( $values[ $field_type->iterator ]['points'] ) ) ? (float)$values[ $field_type->iterator ]['points']  : '';
+		$the_points = ( isset( $values[ $field_type->iterator ]['points'] ) ) ? (float)$values[ $field_type->iterator ]['points']  : '';
 		$the_class = ( !empty( $values[ $field_type->iterator ]['class'] ) ) ? esc_attr( $values[ $field_type->iterator ]['class'] )  : '';
 
 		// print_r( $field_type->iterator ); this is the iterator in the 
@@ -273,7 +298,7 @@ class MJJ_Quizzes_Metaboxes{
 
 							$save_quiz[ $i ]['answers'][ $j ][ 'answer' ] = implode( "\n", array_map( 'sanitize_text_field', explode( "\n", $answer['answer' ] ) ) );
 							$save_quiz[ $i ]['answers'][ $j ][ 'points' ] = (int)$answer['points'];
-							$save_quiz[ $i ]['answers'][ $j ][ 'class' ] = esc_attr( $answer['class'] );
+							$save_quiz[ $i ]['answers'][ $j ][ 'class' ] = sanitize_html_class( $answer['class'] );
 	
 							$j++;
 						}
