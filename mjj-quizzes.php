@@ -26,7 +26,9 @@
 require_once( plugin_dir_path( __FILE__ ) . 'class-mjj-quizzes-cpt.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'class-mjj-quizzes-metaboxes.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'class-mjj-quizzes-api.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'vendor/Parsedown.php' );
+if( ! class_exists ( 'Parsedown' ) ){
+	require_once( plugin_dir_path( __FILE__ ) . 'vendor/Parsedown.php' );
+}
 
 MJJ_Quizzes::get_instance();
 MJJ_Quizzes_CPT::get_instance();
@@ -88,10 +90,14 @@ class MJJ_Quizzes{
 
 	public static function add_scripts() {
 
-		wp_register_script( 'velocity', plugin_dir_url( __FILE__ ) . 'js/vendor/velocity.min.js' );
-		wp_register_script( 'velocity-ui', plugin_dir_url( __FILE__ ) . 'js/vendor/velocity.ui.min.js', array( 'velocity' ) );
+		// NOTE: THIS DOES NOT WORK ON THE STAGING SERVER! IT THINKS IT IS INSECURE, ARGGHGHGHGH
+
+		$velocity_url = set_url_scheme( plugin_dir_url( __FILE__ ) . 'js/vendor/velocity.min.js', 'https' );
+		$velocity_ui_url = set_url_scheme( plugin_dir_url( __FILE__ ) . 'js/vendor/velocity.ui.min.js', 'https' );
 
 		if( is_singular( 'mjj_quiz' ) ){
+			wp_register_script( 'velocity', $velocity_url );
+			wp_register_script( 'velocity-ui', $velocity_ui_url, array( 'velocity' ) );
 
 			$suffix = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min'; //.min
 
