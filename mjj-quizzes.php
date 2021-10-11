@@ -12,12 +12,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * any later version.
- *  
+ *
  * MJJ Quizzes is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *  
+ *
  * You should have received a copy of the GNU General Public License
  * along with {Plugin Name}. If not, see {License URI}.
  * @package mjj-quizzes
@@ -54,7 +54,7 @@ class MJJ_Quizzes{
 	    'img'	=> array(
 	    	'src' 	=> array(),
 	    	'class' => array()
-	    ), 
+	    ),
 	    'li'	=> array(),
 	    'ul'	=> array(),
 	    'blockquote'	=> array()
@@ -80,7 +80,7 @@ class MJJ_Quizzes{
 	}
 
 	public static function add_styles() {
-		
+
 		if( is_singular( 'mjj_quiz' ) ){
 			wp_register_style( 'mjj-quiz-styles', plugins_url( 'css/mjj-quizzes.css', __FILE__ ) );
 			wp_enqueue_style( 'mjj-quiz-styles' );
@@ -101,7 +101,7 @@ class MJJ_Quizzes{
 
 			$suffix = ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ? '' : '.min'; //.min
 
-			wp_register_script( 'mjj-quiz-script', plugin_dir_url( __FILE__ ) . 'js/mjj-quizzes' . $suffix . '.js', array( 'velocity-ui' ), '0.4.0', true );
+			wp_register_script( 'mjj-quiz-script', plugin_dir_url( __FILE__ ) . 'js/mjj-quizzes.min.js', array( 'velocity-ui' ), '1', true );
 			wp_localize_script( 'mjj-quiz-script', 'quiz_object', array( 'ID' => get_the_ID(), 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 			wp_enqueue_script( 'mjj-quiz-script' );
 

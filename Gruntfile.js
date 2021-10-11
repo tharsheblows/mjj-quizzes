@@ -5,9 +5,8 @@ module.exports = function( grunt ) {
 	'use strict';
 	var banner = '/**\n * <%= pkg.homepage %>\n * Copyright (c) <%= grunt.template.today("yyyy") %>\n * This file is generated automatically. Do not edit.\n */\n';
 	// Project configuration
-	grunt.initConfig( {
-
-		pkg: grunt.file.readJSON( 'package.json' ),
+	grunt.initConfig({
+		pkg: grunt.file.readJSON('package.json'),
 
 		addtextdomain: {
 			options: {
@@ -15,9 +14,15 @@ module.exports = function( grunt ) {
 			},
 			target: {
 				files: {
-					src: [ '*.php', '**/*.php', '!node_modules/**', '!php-tests/**', '!bin/**' ]
-				}
-			}
+					src: [
+						'*.php',
+						'**/*.php',
+						'!node_modules/**',
+						'!php-tests/**',
+						'!bin/**',
+					],
+				},
+			},
 		},
 		makepot: {
 			target: {
@@ -27,77 +32,81 @@ module.exports = function( grunt ) {
 					potFilename: 'mjj-quizzes.pot',
 					potHeaders: {
 						poedit: true,
-						'x-poedit-keywordslist': true
+						'x-poedit-keywordslist': true,
 					},
 					type: 'wp-plugin',
-					updateTimestamp: true
-				}
-			}
+					updateTimestamp: true,
+				},
+			},
 		},
 		browserify: {
-      		dev: {
+			dev: {
 				options: {
-           			transform: [['babelify', {presets: ['react']}]]
-        		}, 
-        		src: ['js/src/components/*.jsx'],
-        		dest: 'js/src/mjj-quizzes-components.js'
-      		},
-      		prod: {
-      			src: 'js/src/components/*.jsx',
-        		dest: 'js/src/mjj-quizzes-components.js',
-        		options: {
-        			transform: [
-        				envify({
-                    		NODE_ENV: 'production'
-                  		}), 
-                  		['babelify', {presets: ['react']}] 
-                  	]
-        		}
-      		}
-    	},
-    	concat: {
-    		dist: {
-      			src: ['js/src/mjj-quizzes-components.js'],
-      			dest: 'js/mjj-quizzes.js',
-    		}
-    	},
-    	uglify: {
+					transform: [['babelify', { presets: ['react'] }]],
+				},
+				src: ['js/src/components/*.jsx'],
+				dest: 'js/src/mjj-quizzes-components.js',
+			},
+			prod: {
+				src: 'js/src/components/*.jsx',
+				dest: 'js/src/mjj-quizzes-components.js',
+				options: {
+					transform: [
+						envify({
+							_: 'purge',
+							NODE_ENV: 'production',
+						}),
+						['babelify', { presets: ['react'] }],
+					],
+				},
+			},
+		},
+		concat: {
+			dist: {
+				src: ['js/src/mjj-quizzes-components.js'],
+				dest: 'js/mjj-quizzes.js',
+			},
+		},
+		uglify: {
 			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
 			},
 			build: {
 				expand: true,
 				ext: '.min.js',
-          		cwd: 'js',
+				cwd: 'js',
 				src: 'mjj-quizzes.js',
-				dest: 'js'
-			}
+				dest: 'js',
+			},
 		},
-    	sass: {
+		sass: {
 			build: {
-    			files: {
-    			  	'css/mjj-quizzes.css': 'css/scss/mjj-quizzes.scss'
-    			}
-			}
+				files: {
+					'css/mjj-quizzes.css': 'css/scss/mjj-quizzes.scss',
+				},
+			},
 		},
 		watch: {
 			sass: {
 				files: ['css/scss/*.scss'],
 				tasks: ['sass'],
 				options: {
-					debounceDelay: 500
-				}
+					debounceDelay: 500,
+				},
 			},
 
 			scripts: {
-				files: ['js/src/components/*.jsx', 'js/src/mjj-quizzes-vanilla.js'],
+				files: [
+					'js/src/components/*.jsx',
+					'js/src/mjj-quizzes-vanilla.js',
+				],
 				tasks: ['browserify:dev', 'concat'],
 				options: {
-					debounceDelay: 500
-				}
-			}
-		}
-	} );
+					debounceDelay: 500,
+				},
+			},
+		},
+	});
 
 	grunt.loadNpmTasks( 'grunt-wp-i18n' );
 	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
@@ -112,7 +121,7 @@ module.exports = function( grunt ) {
 
 	grunt.registerTask( 'build', ['browserify:prod', 'concat', 'uglify', 'sass' ] );
 
-	
+
 
 	grunt.util.linefeed = '\n';
 
